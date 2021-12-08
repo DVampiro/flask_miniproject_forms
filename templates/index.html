@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block app_content %}
+{% for category, message in get_flashed_messages(True) %}
+    <div class="alert {{ category }}"> {{ message }}</div>
+{% endfor %}
+<form class="form-group" action="" method="post">
+    <div>
+        {{ form.csrf_token() }}
+        {% for field in form if not field.name in ("csrf_token", "submit") %}
+        <div>{{ field.label() }}</div>
+        <p>
+            {{ field }}
+            {% for error in field.errors %}
+            {{ error }}
+            {% endfor %}
+        </p>
+        {% endfor %}
+        <p>{{ form.submit }}</p>
+    </div>
+</form>
+<a class="btn btn-info" href="{{ url_for('register_page') }}">Регистрация</a>
+
+{% endblock %}
